@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import spring.rest.brewery.web.model.CustomerDto;
 import spring.rest.brewery.web.services.CustomerService;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -25,7 +26,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity saveCustomer(@RequestBody CustomerDto customerDto){
+    public ResponseEntity saveCustomer(@Valid @RequestBody CustomerDto customerDto){
 
         CustomerDto customer = customerService.savedNewCustomer(customerDto);
         HttpHeaders headers = new HttpHeaders();
@@ -36,7 +37,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity handlePut (@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDto){
+    public ResponseEntity handlePut (@PathVariable("customerId") UUID customerId, @Valid @RequestBody CustomerDto customerDto){
 
         customerService.updateCustomer(customerId, customerDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
